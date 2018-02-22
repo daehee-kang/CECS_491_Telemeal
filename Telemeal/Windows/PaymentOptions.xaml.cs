@@ -20,8 +20,10 @@ namespace Telemeal.Windows
     /// </summary>
     public partial class PaymentOptions : Window
     {
+        Order mOrder;
         public PaymentOptions(Order o)
         {
+
             InitializeComponent();
         }
 

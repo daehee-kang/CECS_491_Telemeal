@@ -83,7 +83,12 @@ namespace Telemeal.Windows
             Button b = sender as Button;
             Order order = new Order
             {
-                
+                OrderID = 1,
+                Total = total,
+                SalesTax = tax,
+                OrderDateTime = DateTime.Now,
+                IsTakeOut = false,
+                Foods = cart
             };
 
             var pmtscr = new PaymentOptions(order);
