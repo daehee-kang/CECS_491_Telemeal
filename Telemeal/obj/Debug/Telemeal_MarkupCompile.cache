@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\X1_Carbon_Docs\Bryan's\Documents\GitHub\CECS_491_Telemeal\Telemeal\App.xaml
-10-1461631354
+20-129741582
 
-22-894597113
+282081095510
 252135050213
-Windows\CashPmt.xaml;Windows\EmployeeDBWindow.xaml;Windows\EmployeeLogin.xaml;Windows\FoodDBWindow.xaml;Windows\LogIn.xaml;Windows\ManagerOptions.xaml;Windows\OrderPage.xaml;Windows\PaymentOptions.xaml;Windows\PaypalPmt.xaml;Windows\ViewDB.xaml;
+Pages\CashPmt_Page.xaml;Pages\EmployeeDBWindow_Page.xaml;Pages\EmployeeLogin_Page.xaml;Pages\FoodDBWindow_Page.xaml;Pages\LogIn_Page.xaml;Pages\ManagerOptions_Page.xaml;Pages\OrderPage_Page.xaml;Pages\PaymentOption_Page.xaml;Pages\PaypalPmt_Page.xaml;Windows\CashPmt.xaml;Windows\EmployeeDBWindow.xaml;Windows\EmployeeLogin.xaml;Windows\FoodDBWindow.xaml;Windows\LogIn.xaml;Windows\ManagerOptions.xaml;Windows\OrderPage.xaml;Windows\PaymentOptions.xaml;Windows\PaypalPmt.xaml;Windows\StartUp.xaml;Windows\ViewDB.xaml;
 
-True
+False
 

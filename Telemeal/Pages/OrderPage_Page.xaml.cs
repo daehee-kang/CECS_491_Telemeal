@@ -45,7 +45,7 @@ namespace Telemeal.Pages
             {
                 foods.Add(new Food()
                 {
-                    FoodID = ((int)reader["id"]),
+                    //FoodID = ((int)reader["id"]),
                     Name = ((string)reader["name"]),
                     Price = ((double)reader["price"]),
                     Description = ((string)reader["desc"]),
@@ -186,7 +186,7 @@ namespace Telemeal.Pages
             ScrollViewer viewer = new ScrollViewer();
             viewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
             Grid grid = new Grid();
-            grid.Tag = f.FoodID;
+            grid.Tag = f.Name;
             grid.Height = 100;
             grid.Background = new SolidColorBrush(Colors.AntiqueWhite);
             grid.MouseDown += new MouseButtonEventHandler(FoodClick);
@@ -253,7 +253,7 @@ namespace Telemeal.Pages
             PriceCart.DisplayMemberPath = "Price";
 
             Grid foodGrid = sender as Grid;
-            Food f = foods.Where(x => x.FoodID == int.Parse(foodGrid.Tag.ToString())).First();
+            Food f = foods.Where(x => x.Name == (foodGrid.Tag.ToString())).First();
 
             cart.Add(f);
             ItemCart.Items.Add(f);

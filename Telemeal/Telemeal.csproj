@@ -90,6 +90,33 @@
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\Food.cs" />
     <Compile Include="Model\Order.cs" />
+    <Compile Include="Pages\CashPmt_Page.xaml.cs">
+      <DependentUpon>CashPmt_Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\EmployeeDBWindow_Page.xaml.cs">
+      <DependentUpon>EmployeeDBWindow_Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\EmployeeLogin_Page.xaml.cs">
+      <DependentUpon>EmployeeLogin_Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\FoodDBWindow_Page.xaml.cs">
+      <DependentUpon>FoodDBWindow_Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LogIn_Page.xaml.cs">
+      <DependentUpon>LogIn_Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ManagerOptions_Page.xaml.cs">
+      <DependentUpon>ManagerOptions_Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\OrderPage_Page.xaml.cs">
+      <DependentUpon>OrderPage_Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PaymentOption_Page.xaml.cs">
+      <DependentUpon>PaymentOption_Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PaypalPmt_Page.xaml.cs">
+      <DependentUpon>PaypalPmt_Page.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\CashPmt.xaml.cs">
       <DependentUpon>CashPmt.xaml</DependentUpon>
     </Compile>
@@ -116,6 +143,9 @@
     </Compile>
     <Compile Include="Windows\PaypalPmt.xaml.cs">
       <DependentUpon>PaypalPmt.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\StartUp.xaml.cs">
+      <DependentUpon>StartUp.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\ViewDB.xaml.cs">
       <DependentUpon>ViewDB.xaml</DependentUpon>
@@ -149,6 +179,42 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Pages\CashPmt_Page.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\EmployeeDBWindow_Page.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\EmployeeLogin_Page.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\FoodDBWindow_Page.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\LogIn_Page.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\ManagerOptions_Page.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\OrderPage_Page.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PaymentOption_Page.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PaypalPmt_Page.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Windows\CashPmt.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -184,6 +250,10 @@
     <Page Include="Windows\PaypalPmt.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\StartUp.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\ViewDB.xaml">
       <SubType>Designer</SubType>

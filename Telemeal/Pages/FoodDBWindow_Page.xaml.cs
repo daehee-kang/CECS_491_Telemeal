@@ -23,25 +23,28 @@ using Telemeal.Windows;
 namespace Telemeal.Pages
 {
     /// <summary>
-    /// Interaction logic for FoodDBWindow_Page.xaml
+    /// Interaction logic for FoodDBTestWindow.xaml
     /// </summary>
+
+
+
     public partial class FoodDBWindow_Page : Page
     {
+        private static string ERROR_CODE_MRF = "Required Fields: Name, Price, Category -- ";
+        private static string ERROR_CODE_IDT = "Invalid Datatype: ";
         dbConnection conn = new dbConnection();
         List<Food> lFood = new List<Food>();
+        Sub_Category[] sub_list = new Sub_Category[] { Sub_Category.Drink, Sub_Category.Appetizer, Sub_Category.Main, Sub_Category.Dessert };
 
         public FoodDBWindow_Page()
         {
             InitializeComponent();
-            cbAddCategory.Items.Add(Sub_Category.Drink);
-            cbAddCategory.Items.Add(Sub_Category.Appetizer);
-            cbAddCategory.Items.Add(Sub_Category.Main);
-            cbAddCategory.Items.Add(Sub_Category.Dessert);
 
-            cbEditCategory.Items.Add(Sub_Category.Drink);
-            cbEditCategory.Items.Add(Sub_Category.Appetizer);
-            cbEditCategory.Items.Add(Sub_Category.Main);
-            cbEditCategory.Items.Add(Sub_Category.Dessert);
+            foreach (Sub_Category s in sub_list)
+            {
+                cbAddCategory.Items.Add(s);
+                cbEditCategory.Items.Add(s);
+            }
 
             PopulateCBEditFoodID();
         }
@@ -51,17 +54,16 @@ namespace Telemeal.Pages
             SQLiteDataReader reader = conn.ViewTable("Food");
             while (reader.Read())
             {
-                IDataRecord record = reader as IDataRecord;
-                int id = (int)record[0];
-                string name = (string)record[1];
-                double price = (double)record[2];
-                string desc = (string)record[3];
-                string image = (string)record[4];
-                Main_Category main = (Main_Category)record[5];
-                Sub_Category sub = (Sub_Category)record[6];
+                Console.WriteLine($"{reader["id"].ToString()}, {reader["name"].ToString()}");
+                int id = int.Parse(reader["id"].ToString());
+                string name = (string)reader["name"];
+                double price = (double)reader["price"];
+                string desc = (string)reader["desc"];
+                string image = (string)reader["img"];
+                Main_Category main = (Main_Category)Enum.Parse(typeof(Main_Category), reader["mainctgr"].ToString());
+                Sub_Category sub = (Sub_Category)Enum.Parse(typeof(Sub_Category), reader["subctgr"].ToString());
                 Food food = new Food
                 {
-                    FoodID = id,
                     Name = name,
                     Price = price,
                     Description = desc,
@@ -71,47 +73,70 @@ namespace Telemeal.Pages
                 };
 
                 lFood.Add(food);
-                cbEditFoodID.Items.Add(food.FoodID);
+                cbEditName.Items.Add(food.Name);
             }
             reader.Close();
         }
 
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            conn.Close();
-        }
-
         private void bAddFoodItem_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Controls.Button b = sender as System.Windows.Controls.Button;
-            string tableName = "Food";
-
-            int fID = int.Parse(tbAddNumber.Text);
-            string fName = tbAddName.Text;
-            double fPrice = double.Parse(tbAddPrice.Text);
-            string fDesc = tbAddDesc.Text;
-            string fImg = TelemealPath(tbAddImage.Text);
-            Main_Category fMainCtgr = Main_Category.All;
-            Sub_Category fSubCtgr = (Sub_Category)Enum.Parse(typeof(Sub_Category), cbAddCategory.Text);
-
-            Food food = new Food
+            Button b = sender as Button;
+            string fName = "";
+            double fPrice;
+            string fDesc = "";
+            string fImg = "";
+            Main_Category fMain = Main_Category.All;
+            Sub_Category fSub;
+            try
             {
-                FoodID = fID,
-                Name = fName,
-                Price = fPrice,
-                Description = fDesc,
-                Img = fImg,
-                MainCtgr = fMainCtgr,
-                SubCtgr = fSubCtgr
-            };
-            conn.InsertFood(tableName, food);
-            lFood.Add(food);
-            cbEditFoodID.Items.Add(food.FoodID);
+                if ((fName = tbAddName.Text) == "")
+                    throw new ArgumentNullException("Missing Name");
+                if (tbAddPrice.Text == "")
+                    throw new ArgumentNullException("Missing Price");
+                fPrice = double.Parse(tbAddPrice.Text);
+                fDesc = tbAddDesc.Text;
+                fImg = TelemealPath(tbAddImage.Text);
+                if (cbAddCategory.Text == "")
+                    throw new ArgumentNullException("Missing Category");
+                fSub = (Sub_Category)Enum.Parse(typeof(Sub_Category), cbAddCategory.Text);
+
+                Food food = new Food
+                {
+                    Name = fName,
+                    Price = fPrice,
+                    Description = fDesc,
+                    Img = fImg,
+                    MainCtgr = fMain,
+                    SubCtgr = fSub
+                };
+                conn.InsertFood(food);
+                lFood.Add(food);
+
+                tbAddName.Clear();
+                tbAddImage.Clear();
+                tbAddDesc.Clear();
+                tbAddPrice.Clear();
+                cbAddCategory.SelectedIndex = -1;
+
+                cbEditName.Items.Add(food.Name);
+            }
+            catch (ArgumentNullException ex)
+            {
+                MessageBox.Show(ERROR_CODE_MRF + ex.ParamName);
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show(ERROR_CODE_IDT);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         private void bAddImage_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Controls.Button b = sender as System.Windows.Controls.Button;
+            Button b = sender as Button;
             string imgFile = "";
             OpenFileDialog ofd = new OpenFileDialog();
 
@@ -129,27 +154,33 @@ namespace Telemeal.Pages
                 }
                 catch (Exception ex)
                 {
-                    System.Windows.MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+                    MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
                 }
             }
         }
 
         private void bViewFoodItem_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Controls.Button b = sender as System.Windows.Controls.Button;
-            ViewDB viewDB = new ViewDB();
-            viewDB.Show();
+            try
+            {
+                Button b = sender as Button;
+                ViewDB viewDB = new ViewDB();
+                viewDB.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            System.Windows.Controls.ComboBox cBox = sender as ComboBox;
-            int id = 0;
+            ComboBox cBox = sender as ComboBox;
+            string name = "";
             if (cBox.SelectedIndex != -1)
             {
-                id = int.Parse(cBox.SelectedItem.ToString());
-                Food food = lFood.Where(v => v.FoodID == id).First();
-                tbEditName.Text = food.Name;
+                name = cBox.SelectedItem as string;
+                Food food = lFood.Where(v => v.Name == name).First();
                 tbEditPrice.Text = food.Price.ToString();
                 tbEditDesc.Text = food.Description;
                 tbEditImage.Text = food.Img;
@@ -159,24 +190,29 @@ namespace Telemeal.Pages
 
         private void bEdit_Click(object sender, RoutedEventArgs e)
         {
-            int id = (int)cbEditFoodID.SelectedValue;
-            string name = tbEditName.Text;
-            double price = double.Parse(tbEditPrice.Text);
-            string desc = tbEditDesc.Text;
-            string img = TelemealPath(tbEditImage.Text);
-            Main_Category main = Main_Category.All;
-            Sub_Category sub = (Sub_Category)Enum.Parse(typeof(Sub_Category), cbEditCategory.Text);
-            Food food = new Food
+            try
             {
-                FoodID = id,
-                Name = name,
-                Price = price,
-                Description = desc,
-                Img = img,
-                MainCtgr = main,
-                SubCtgr = sub
-            };
-            conn.UpdateFood("Food", food);
+                string name = cbEditName.Text;
+                double price = double.Parse(tbEditPrice.Text);
+                string desc = tbEditDesc.Text;
+                string img = TelemealPath(tbEditImage.Text);
+                Main_Category main = Main_Category.All;
+                Sub_Category sub = (Sub_Category)Enum.Parse(typeof(Sub_Category), cbEditCategory.Text);
+                Food food = new Food
+                {
+                    Name = name,
+                    Price = price,
+                    Description = desc,
+                    Img = img,
+                    MainCtgr = main,
+                    SubCtgr = sub
+                };
+                conn.UpdateFood(food);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         private void bEditImage_Click(object sender, RoutedEventArgs e)
@@ -206,19 +242,32 @@ namespace Telemeal.Pages
 
         private void bDelete_Click(object sender, RoutedEventArgs e)
         {
-            int id = int.Parse(cbEditFoodID.Text);
-            conn.DeleteFoodByID("Food", id);
-            cbEditFoodID.SelectedIndex = -1;
-            tbEditName.Clear();
+            try
+            {
+                string name = cbEditName.Text;
+                double price = double.Parse(tbEditPrice.Text);
+                conn.DeleteFoodByNameAndPrice(name, price);
+
+                ClearEditFields();
+
+                PopulateCBEditFoodID();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void ClearEditFields()
+        {
+            cbEditName.SelectedIndex = -1;
             tbEditImage.Clear();
             tbEditDesc.Clear();
             tbEditPrice.Clear();
             cbEditCategory.SelectedIndex = -1;
 
-            cbEditFoodID.Items.Clear();
+            cbEditName.Items.Clear();
             lFood.Clear();
-
-            PopulateCBEditFoodID();
         }
 
         private string TelemealPath(string path)
@@ -255,3 +304,4 @@ namespace Telemeal.Pages
         }
     }
 }
+
