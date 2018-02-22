@@ -7,13 +7,17 @@
         mc:Ignorable="d"
         Title="FoodDBTestWindow" Height="500" Width="600" WindowState="Maximized">
     <Viewbox>
-        <UniformGrid Rows="1" Columns="2">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
             <StackPanel Grid.Row="0" Grid.Column="0" Margin="10, 0">
                 <TextBlock TextAlignment="Center" FontSize="30">Add Item</TextBlock>
-                <WrapPanel>
-                    <TextBlock HorizontalAlignment="Left" Width="150" FontSize="20">Food ID Number:</TextBlock>
-                    <TextBox Name="tbAddNumber" HorizontalAlignment="Right" TextAlignment="Right" FontSize="20" Width="120"></TextBox>
-                </WrapPanel>
                 <WrapPanel>
                     <TextBlock HorizontalAlignment="Left" Width="150" FontSize="20">Food Name:</TextBlock>
                     <TextBox Name="tbAddName" HorizontalAlignment="Right" TextAlignment="Right" FontSize="20" Width="120"></TextBox>
@@ -33,18 +37,12 @@
                     <TextBlock HorizontalAlignment="Left" FontSize="20">Category:</TextBlock>
                     <ComboBox Name="cbAddCategory" FontSize="20" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Width="180"></ComboBox>
                 </WrapPanel>
-                <Button Name="bAddFoodItem" Margin="10, 10" Click="bAddFoodItem_Click">Add Food Item</Button>
-                <Button Name="bViewFoodItem" Margin="10, 10" Click="bViewFoodItem_Click">View Food Items</Button>
             </StackPanel>
             <StackPanel Grid.Row="0" Grid.Column="1" Margin="10, 0">
                 <TextBlock TextAlignment="Center" FontSize="30">Update Item</TextBlock>
                 <WrapPanel>
-                    <TextBlock HorizontalAlignment="Left" Width="150" FontSize="20">Food ID Number:</TextBlock>
-                    <ComboBox Name="cbEditFoodID" HorizontalAlignment="Right" HorizontalContentAlignment="Center" FontSize="20" Width="120" SelectionChanged="ComboBox_SelectionChanged"></ComboBox>
-                </WrapPanel>
-                <WrapPanel>
                     <TextBlock HorizontalAlignment="Left" Width="150" FontSize="20">Food Name:</TextBlock>
-                    <TextBox Name="tbEditName" HorizontalAlignment="Right" TextAlignment="Right" FontSize="20" Width="120"></TextBox>
+                    <ComboBox Name="cbEditName" HorizontalAlignment="Right" HorizontalContentAlignment="Center" FontSize="20" Width="120" SelectionChanged="ComboBox_SelectionChanged"></ComboBox>
                 </WrapPanel>
                 <WrapPanel>
                     <TextBlock HorizontalAlignment="Left" Width="150" FontSize="20">Price:</TextBlock>
@@ -61,9 +59,15 @@
                     <TextBlock HorizontalAlignment="Left" FontSize="20">Category:</TextBlock>
                     <ComboBox Name="cbEditCategory" FontSize="20" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Width="180"></ComboBox>
                 </WrapPanel>
+            </StackPanel>
+            <StackPanel Grid.Row="2">
+                <Button Name="bAddFoodItem" Margin="10, 10" Click="bAddFoodItem_Click">Add Food Item</Button>
+                <Button Name="bViewFoodItem" Margin="10, 10" Click="bViewFoodItem_Click">View Food Items</Button>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Grid.Column="2">
                 <Button Name="bEdit" Margin="10, 10" Click="bEdit_Click">Edit Food Item</Button>
                 <Button Name="bDelete" Margin="10, 10" Click="bDelete_Click">Delete Food Item</Button>
             </StackPanel>
-        </UniformGrid>
+        </Grid>
     </Viewbox>
 </Window>

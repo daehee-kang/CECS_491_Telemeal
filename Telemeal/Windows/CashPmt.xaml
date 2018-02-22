@@ -15,19 +15,21 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}">
-    <StackPanel>
-        <TextBlock Margin="0, 60, 0, 0" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center">
-            Order Forwarded to Cashier
-        </TextBlock>
-        <TextBlock FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center">
-            Your Order Number is
-        </TextBlock>
-        <TextBlock FontSize="40" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center">
-            --
-        </TextBlock>
-        <TextBlock FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center">
-            See Cashier to finish ordering
-        </TextBlock>
-        <Button Margin="174,20,174,0" Height="30" Click="Intro_Click">Back to Intro</Button>
-    </StackPanel>
+    <Viewbox>
+        <StackPanel>
+            <TextBlock Margin="0, 60, 0, 0" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center">
+                Order Forwarded to Cashier
+            </TextBlock>
+            <TextBlock FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center">
+                Your Order Number is
+            </TextBlock>
+            <TextBlock FontSize="40" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center">
+                --
+            </TextBlock>
+            <TextBlock FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center">
+                See Cashier to finish ordering
+            </TextBlock>
+            <Button Margin="0, 20, 0, 20" Width="200" Height="30" Click="Intro_Click">Back to Intro</Button>
+        </StackPanel>
+    </Viewbox>
 </Window>

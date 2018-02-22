@@ -54,9 +54,6 @@ namespace Telemeal.Windows
                 ADMINNAME = ((string)reader["name"]);
                 if (EmployeeID.Password.Equals(ADMINID) && EmployeeName.Text.Equals(ADMINNAME))
                 {
-                    //var foodDB = new FoodDBTestWindow();
-                    //foodDB.Closed += Window_Closed;
-                    //foodDB.Show();
                     key = true;
                     admin = ((bool)reader["privilege"]);
                     break;
@@ -80,19 +77,11 @@ namespace Telemeal.Windows
                     this.Hide();
                 }
             }
-
-
-            /*if (ADMINID.Equals(id.ToString()))
+            else
             {
-                //var foodDB = new FoodDBTestWindow();
-                //foodDB.Closed += Window_Closed;
-                //foodDB.Show();
-
-                var manOption = new ManagerOptions();
-                manOption.Closed += Window_Closed;
-                manOption.Show();
-                this.Hide();
-            }*/
+                MessageBox.Show("Invalid ID or Name. Try again.");
+            }
+            ClearFields();
         }
         private void Window_Closed(object sender, EventArgs e)
         {
@@ -104,6 +93,11 @@ namespace Telemeal.Windows
             
         }
 
+        private void ClearFields()
+        {
+            EmployeeName.Clear();
+            EmployeeID.Clear();
+        }
        
     }
 }

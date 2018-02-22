@@ -26,33 +26,43 @@ namespace Telemeal.Model
             sqlite_cmd = sqlite_conn.CreateCommand();
         }
 
-        public void CreateFoodTable(string tableName)
+        public void CreateFoodTable()
         {
-            string cmd = $"CREATE TABLE {tableName} (id INT, name VARCHAR(50), price DOUBLE, desc VARCHAR(200), img VARCHAR(100), mainctgr INT, subctgr INT)";
+            string cmd = $"CREATE TABLE Food " +
+                $"(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                $"name VARCHAR(50) NOT NULL, " +
+                $"price DOUBLE NOT NULL, " +
+                $"desc VARCHAR(200), " +
+                $"img VARCHAR(100), " +
+                $"mainctgr INTEGER, " +
+                $"subctgr INTEGER NOT NULL," +
+                $"CONSTRAINT name_price_ctgr_unique_key UNIQUE (name, price, subctgr))";
             sqlite_cmd = new SQLiteCommand(cmd, sqlite_conn);
             sqlite_cmd.ExecuteNonQuery();
         }
 
-        public void CreateEmployeeTable(string tableName)
+        public void CreateEmployeeTable()
         {
-            string cmd = $"CREATE TABLE {tableName} (id INT, name VARCHAR(50), position VARCHAR(50), privilege BOOL)";
+            string cmd = $"CREATE TABLE Employee " +
+                $"(id INTEGER NOT NULL, " +
+                $"name VARCHAR(50) NOT NULL, " +
+                $"position VARCHAR(50), " +
+                $"privilege BOOL, " +
+                $"PRIMARY KEY(id, name))";
             sqlite_cmd = new SQLiteCommand(cmd, sqlite_conn);
             sqlite_cmd.ExecuteNonQuery();
         }
 
-        public void InsertFood(string tableName, Food food)
+        public void InsertFood(Food food)
         {
-            int foodID = food.FoodID;
             string name = food.Name;
             double price = food.Price;
             string desc = food.Description;
             string img = food.Img;
             int mainCtr = (int) food.MainCtgr;
             int subCtr = (int) food.SubCtgr;
-            //string cmd = $"INSERT INTO {tableName} (id, name, price, desc, img, mainctgr, subctgr) VALUES ({foodID}, '{name}', {price}, '{desc}', '{img}', {mainCtr}, {subCtr})";
-            string cmd = $"INSERT INTO {tableName} (id, name, price, desc, img, mainctgr, subctgr) VALUES (@foodID, @name, @price, @desc, @img, @mainCtr, @subCtr)";
+            string cmd = $"INSERT INTO Food (name, price, desc, img, mainctgr, subctgr) VALUES (@name, @price, @desc, @img, @mainCtr, @subCtr)";
             sqlite_cmd = new SQLiteCommand(cmd, sqlite_conn);
-            sqlite_cmd.Parameters.AddWithValue("@foodID", foodID);
             sqlite_cmd.Parameters.AddWithValue("@name", name);
             sqlite_cmd.Parameters.AddWithValue("@price", price);
             sqlite_cmd.Parameters.AddWithValue("@desc", desc);
@@ -62,35 +72,30 @@ namespace Telemeal.Model
             sqlite_cmd.ExecuteNonQuery();
         }
 
-        public void InsertEmployee(string tableName, Employee employee)
+        public void InsertEmployee(Employee employee)
         {
             int employeeID = employee.ID;
             string employeeName = employee.name;
             string employeePosition = employee.position;
             bool employeePrivilege = employee.privilege;
-            string cmd = $"INSERT INTO {tableName} (id, name, position, privilege) VALUES ({employeeID}, '{employeeName}', '{employeePosition}', '{employeePrivilege}')";
+            string cmd = $"INSERT INTO Employee (id, name, position, privilege) VALUES ({employeeID}, '{employeeName}', '{employeePosition}', '{employeePrivilege}')";
             sqlite_cmd = new SQLiteCommand(cmd, sqlite_conn);
             sqlite_cmd.ExecuteNonQuery();
         }
 
-        public void UpdateFood(string tableName, Food food) {
-            int foodID = food.FoodID;
+        public void UpdateFood(Food food) {
             string name = food.Name;
             double price = food.Price;
             string desc = food.Description;
             string img = food.Img;
             int mainCtr = (int)food.MainCtgr;
             int subCtr = (int)food.SubCtgr;
-            /**
-            string cmd = $"UPDATE {tableName} " +
-                $"SET name = '{name}', price = {price}, desc = '{desc}', img = '{img}', mainctgr = {mainCtr}, subctgr = {subCtr} " + 
-                $"WHERE id = {foodID}";*/
             
-            string cmd = $"UPDATE {tableName} " +
+            string cmd = $"UPDATE Food " +
                 $"SET name = @name, price = @price, desc = @desc, img = @img, mainctgr = @mainCtr, subctgr = @subCtr " +
                 $"WHERE id = @foodID";
             sqlite_cmd = new SQLiteCommand(cmd, sqlite_conn);
-            sqlite_cmd.Parameters.AddWithValue("@foodID", foodID);
+
             sqlite_cmd.Parameters.AddWithValue("@name", name);
             sqlite_cmd.Parameters.AddWithValue("@price", price);
             sqlite_cmd.Parameters.AddWithValue("@desc", desc);
@@ -100,11 +105,24 @@ namespace Telemeal.Model
             sqlite_cmd.ExecuteNonQuery();
         }
 
-        public void DeleteFoodByID(string tableName, int id)
+        public void DeleteFoodByNameAndPrice(string name, double price)
         {
-            string cmd = $"DELETE FROM {tableName} WHERE id = @id";
+            string cmd = $"DELETE FROM Food WHERE name = '{name}' AND price = {price}";
             sqlite_cmd = new SQLiteCommand(cmd, sqlite_conn);
-            sqlite_cmd.Parameters.AddWithValue("@id", id);
+            sqlite_cmd.ExecuteNonQuery();
+        }
+
+        public void DeleteFoodByName(string name)
+        {
+            string cmd = $"DELETE FROM Food WHERE name = '{name}'";
+            sqlite_cmd = new SQLiteCommand(cmd, sqlite_conn);
+            sqlite_cmd.ExecuteNonQuery();
+        }
+
+        public void DeleteEmployeeByName(string name)
+        {
+            string cmd = $"DELETE FROM Employee WHERE name = '{name}'";
+            sqlite_cmd = new SQLiteCommand(cmd, sqlite_conn);
             sqlite_cmd.ExecuteNonQuery();
         }
 

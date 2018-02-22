@@ -81,7 +81,12 @@ namespace Telemeal.Windows
         private void CheckOut_Click(object sender, RoutedEventArgs e)
         {
             Button b = sender as Button;
-            var pmtscr = new PaymentOptions(total * (1 + tax),cart);
+            Order order = new Order
+            {
+                
+            };
+
+            var pmtscr = new PaymentOptions(order);
             pmtscr.Closed += Window_Closed;
             pmtscr.Show();
             this.Hide();

@@ -20,43 +20,9 @@ namespace Telemeal.Windows
     /// </summary>
     public partial class PaymentOptions : Window
     {
-        private double dueAmount;
-        private List<Food> foods = new List<Food>();
-
-        public PaymentOptions(double due)
+        public PaymentOptions(Order o)
         {
-            dueAmount = due;
             InitializeComponent();
-            AmountDue.Text = "$" + string.Format("{0:F2}", dueAmount);
-        }
-
-        public PaymentOptions(double due, List<Food> f) : this(due)
-        {
-            var grid = new GridView();
-
-            Cart.View = grid;
-
-            grid.Columns.Add(new GridViewColumn
-            {
-                Header = "Name",
-                DisplayMemberBinding = new Binding("Name")
-            });
-            grid.Columns.Add(new GridViewColumn
-            {
-                Header = "Price",
-                DisplayMemberBinding = new Binding("Price")
-            });
-
-       
-            foreach (Food food in f)
-            {
-                foods.Add(food);
-            }
-
-            foreach(Food food in foods)
-            {
-                Cart.Items.Add(food);
-            }
         }
 
         private void Menu_Click(object sender, RoutedEventArgs e)
