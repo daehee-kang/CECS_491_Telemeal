@@ -1,0 +1,48 @@
+﻿<Window x:Class="Telemeal.Windows.EmployeeDBTestWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Telemeal.Windows"
+        mc:Ignorable="d"
+        Title="EmployeeDBTestWindow" Height="500" Width="300" WindowState="Maximized">
+    <StackPanel>
+        <TextBlock>Give Table Name:</TextBlock>
+        <TextBox Name="TableName"></TextBox>
+        <Button Name="CreateTable" Click="CreateTable_Click">Create Table</Button>
+        <TextBlock>Insert Employee:</TextBlock>
+        <Grid>
+            <TextBlock TextAlignment="Right" Foreground="Gray" Name="hintTableName">Table Name</TextBlock>
+            <TextBox TextAlignment="Right" Name="eTable" SelectionChanged="eTable_SelectionChanged"/>
+        </Grid>
+        <Grid>
+            <TextBlock TextAlignment="Right" Foreground="Gray" Name="hintEmployeeID">Employee ID</TextBlock>
+            <TextBox TextAlignment="Right" Name="eID" SelectionChanged="eID_SelectionChanged"/>
+        </Grid>
+        <Grid>
+            <TextBlock TextAlignment="Right" Foreground="Gray" Name="hintEmployeeName">Employee Name</TextBlock>
+            <TextBox TextAlignment="Right" Name="eName" SelectionChanged="eName_SelectionChanged"/>
+        </Grid>
+        <Grid>
+            <TextBlock TextAlignment="Right" Foreground="Gray" Name="hintEmployeePosition">Employee Position</TextBlock>
+            <TextBox TextAlignment="Right" Name="ePosition" SelectionChanged="ePosition_SelectionChanged"/>
+        </Grid>
+        <Grid>
+            <TextBlock TextAlignment="Right" Foreground="Gray">Give Admin Privileges</TextBlock>
+            <CheckBox Name="ePrivilege" IsChecked="{Binding isAdmin}" Margin="150,0,0,0"></CheckBox>
+        </Grid>
+        <Button Name="AddEmployee" Click="AddEmployee_Click">Add Employee</Button>
+        <TextBlock>View Your Database:</TextBlock>
+        <Grid>
+            <TextBlock TextAlignment="Right" Foreground="Gray" Name="hintViewTableName">Table Name</TextBlock>
+            <TextBox TextAlignment="Right" Name="viewTableName" SelectionChanged="viewTableName_SelectionChanged"/>
+        </Grid>
+        <TextBlock Name="ShowData"></TextBlock>
+        <Button Name="Generate" Click="Generate_Click">Generate</Button>
+        <Grid>
+            <TextBlock TextAlignment="Right" Foreground="Gray" Name="hintTableDelete">Table Name</TextBlock>
+            <TextBox TextAlignment="Right" Name="NameDelete" SelectionChanged="NameDelete_SelectionChanged"/>
+        </Grid>
+        <Button Name="Delete" Click="Delete_Click">Delete Table</Button>
+    </StackPanel>
+</Window>

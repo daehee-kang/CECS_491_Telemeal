@@ -1,0 +1,33 @@
+﻿<Window x:Class="Telemeal.Windows.CashPmt"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Telemeal.Windows"
+        mc:Ignorable="d"
+        Title="CashPmt" Height="400" Width="700" WindowState="Maximized"
+        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+    <StackPanel>
+        <TextBlock Margin="0, 60, 0, 0" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center">
+            Order Forwarded to Cashier
+        </TextBlock>
+        <TextBlock FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center">
+            Your Order Number is
+        </TextBlock>
+        <TextBlock FontSize="40" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center">
+            --
+        </TextBlock>
+        <TextBlock FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center">
+            See Cashier to finish ordering
+        </TextBlock>
+        <Button Margin="174,20,174,0" Height="30" Click="Intro_Click">Back to Intro</Button>
+    </StackPanel>
+</Window>
