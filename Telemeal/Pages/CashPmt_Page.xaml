@@ -1,0 +1,26 @@
+﻿<Page x:Class="Telemeal.Pages.CashPmt_Page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Telemeal.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="CashPmt_Page">
+
+    <StackPanel>
+        <TextBlock Margin="0, 60, 0, 0" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center">
+            Order Forwarded to Cashier
+        </TextBlock>
+        <TextBlock FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center">
+            Your Order Number is
+        </TextBlock>
+        <TextBlock FontSize="40" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center">
+            --
+        </TextBlock>
+        <TextBlock FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center">
+            See Cashier to finish ordering
+        </TextBlock>
+        <Button Margin="174,20,174,0" Height="30" Click="Intro_Click">Back to Intro</Button>
+    </StackPanel>
+</Page>
