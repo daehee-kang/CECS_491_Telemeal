@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\daehe\Desktop\Senior_Project\CECS_491_Telemeal\Telemeal\obj\Debug\
+D:\X1_Carbon_Docs\Bryan's\Documents\GitHub\CECS_491_Telemeal\Telemeal\obj\Debug\
 Telemeal
 none
 false
 DEBUG;TRACE
-C:\Users\daehe\Desktop\Senior_Project\CECS_491_Telemeal\Telemeal\App.xaml
-10-1461631354
+D:\X1_Carbon_Docs\Bryan's\Documents\GitHub\CECS_491_Telemeal\Telemeal\App.xaml
+20-129741582
 
-18-2063267748
-251398914056
-Windows\CashPmt.xaml;Windows\EmployeeDBWindow.xaml;Windows\EmployeeLogin.xaml;Windows\FoodDBWindow.xaml;Windows\LogIn.xaml;Windows\ManagerOptions.xaml;Windows\OrderPage.xaml;Windows\PaymentOptions.xaml;Windows\PaypalPmt.xaml;Windows\ViewDB.xaml;
+32-1045201151
+26-991031835
+Pages\CashPmt_Page.xaml;Pages\EmployeeDBWindow_Page.xaml;Pages\EmployeeLogin_Page.xaml;Pages\FoodDBWindow_Page.xaml;Pages\LogIn_Page.xaml;Pages\ManagerOptions_Page.xaml;Pages\OrderPage_Page.xaml;Pages\PaymentOption_Page.xaml;Pages\PaypalPmt_Page.xaml;Windows\CashPmt.xaml;Windows\EmployeeDBWindow.xaml;Windows\EmployeeLogin.xaml;Windows\FoodDBWindow.xaml;Windows\LogIn.xaml;Windows\ManagerOptions.xaml;Windows\OrderPage.xaml;Windows\PaymentOptions.xaml;Windows\PaypalPmt.xaml;Windows\StartUp.xaml;Windows\ViewDB.xaml;
 
-False
+True
 
