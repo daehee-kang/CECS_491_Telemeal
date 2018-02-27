@@ -14,5 +14,10 @@ namespace Telemeal.Model
         public DateTime OrderDateTime { get; set; }
         public bool IsTakeOut { get; set; }
         public List<Food> Foods { get; set; }
+
+        public double SubTotal()
+        {
+            return Total + Total * SalesTax;
+        }
     }
 }

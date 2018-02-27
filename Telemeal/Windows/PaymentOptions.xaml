@@ -17,13 +17,27 @@
         FontFamily="{DynamicResource MaterialDesignFont}">
     <Viewbox>
         <DockPanel>
-            <Border BorderBrush="Black" BorderThickness="1.0" DockPanel.Dock="Right">
-                <ListView Name="Cart" Width="150" DockPanel.Dock="Right"></ListView>
+            <Border BorderBrush="Black" BorderThickness="1.0" Width="300" DockPanel.Dock="Right">
+                <ScrollViewer Height="400">
+                    <DataGrid IsReadOnly="True" Name="itemCart" FontSize="10" AutoGenerateColumns="False">
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="FontSize" Value="15"/>
+                                <Setter Property="Height" Value="30"/>
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Width="50" Header="Qty." Binding="{Binding Qty}"/>
+                            <DataGridTextColumn Width="160" Header="Name" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Width="70" Header="Price" Binding="{Binding Price}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </ScrollViewer>
             </Border>
             <StackPanel DockPanel.Dock="Top" Height="30" Width="100" HorizontalAlignment="Left">
                 <Button x:Name="Menu" Content="Menu" d:LayoutOverrides="Height" Click="Menu_Click"/>
             </StackPanel>
-            <StackPanel Height="150" DockPanel.Dock="Top" HorizontalAlignment="Center" Width="540">
+            <StackPanel Height="150" DockPanel.Dock="Top" HorizontalAlignment="Center" Width="440">
                 <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" Margin="0, 30, 0, 0">SubTotal:</TextBlock>
                 <TextBlock Name="AmountDue" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" FontWeight="Bold"></TextBlock>
             </StackPanel>

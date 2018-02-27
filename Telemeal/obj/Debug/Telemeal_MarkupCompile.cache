@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\daehe\Desktop\Senior_Project\CECS491Project\Telemeal\obj\Debug\
+C:\Users\daehe\Desktop\Senior_Project\CECS_491_Telemeal\Telemeal\obj\Debug\
 Telemeal
 none
 false
 DEBUG;TRACE
-C:\Users\daehe\Desktop\Senior_Project\CECS491Project\Telemeal\App.xaml
+C:\Users\daehe\Desktop\Senior_Project\CECS_491_Telemeal\Telemeal\App.xaml
 10-1461631354
 
 18-2063267748
-251864563813
+251398914056
 Windows\CashPmt.xaml;Windows\EmployeeDBWindow.xaml;Windows\EmployeeLogin.xaml;Windows\FoodDBWindow.xaml;Windows\LogIn.xaml;Windows\ManagerOptions.xaml;Windows\OrderPage.xaml;Windows\PaymentOptions.xaml;Windows\PaypalPmt.xaml;Windows\ViewDB.xaml;
 
-True
+False
 

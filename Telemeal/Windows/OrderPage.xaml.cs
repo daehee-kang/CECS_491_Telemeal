@@ -18,11 +18,19 @@ using System.Data.SQLite;
 
 namespace Telemeal.Windows
 {
+    public class CartItems
+    {
+        public int Qty { get; set; }
+        public String Name { get; set; }
+        public double Price { get; set; }
+    }
+
     public partial class OrderPage : Window
     { 
         List<Food> foods = new List<Food>();
         List<Food> cart = new List<Food>();
         List<Grid> grids = new List<Grid>();
+        List<CartItems> items = new List<CartItems>();
         double tax = 0.1;
         double total = 0;
 
@@ -31,6 +39,7 @@ namespace Telemeal.Windows
             InitializeComponent();
             List<Food> categories = new List<Food>();
             dbConnection conn = new dbConnection();
+            itemCart.ItemsSource = items;
 
             categories.Add(new Food() {SubCtgr = Sub_Category.Drink });
             categories.Add(new Food() {SubCtgr = Sub_Category.Appetizer });
@@ -48,28 +57,11 @@ namespace Telemeal.Windows
             this.taxTBox.Text = string.Format("{0:F2}", total * tax);
             this.subtotalTBox.Text = string.Format("{0:F2}", (total + Double.Parse(taxTBox.Text)));
 
-            //foods.Add(new Food() { FoodID = 1, Name = "Hamburger", Price = 2.50, Img = "/Telemeal;component/Images/hamburger.png", SubCtgr = Sub_Category.Main });
-            //foods.Add(new Food() { FoodID = 2, Name = "Cheeseburger", Price = 3.00, Img = "/Telemeal;component/Images/cheeseburger.png", SubCtgr = Sub_Category.Main });
-            //foods.Add(new Food() { FoodID = 3, Name = "Double Double Burger", Price = 4.00, Img = "/Telemeal;component/Images/doubleburger.png", SubCtgr = Sub_Category.Main });
-            //foods.Add(new Food() { FoodID = 4, Name = "French Fries", Price = 1.50, Img = "/Telemeal;component/Images/fries.jpg", SubCtgr = Sub_Category.Appetizer });
-            //foods.Add(new Food() { FoodID = 5, Name = "Animal Fries", Price = 3.00, Img = "/Telemeal;component/Images/animal.jpg", SubCtgr = Sub_Category.Appetizer });
-            //foods.Add(new Food() { FoodID = 6, Name = "sm Drink", Price = 1.50, Img = "", SubCtgr = Sub_Category.Drink });
-            //foods.Add(new Food() { FoodID = 7, Name = "lg Drink", Price = 2.00, Img = "", SubCtgr = Sub_Category.Drink });
-            //foods.Add(new Food() { FoodID = 8, Name = "Milkshake", Price = 3.00, Img = "/Telemeal;component/Images/milkshake.jpg", SubCtgr = Sub_Category.Dessert });
-            //foods.Add(new Food() { FoodID = 9, Name = "Cookie", Price = 1.00, Img = "", SubCtgr = Sub_Category.Dessert });
-
             foreach (Food f in foods)
             {
                 ChangeMenu(f);
             }
 
-            /*
-            DataAccess db = new DataAccess();
-            foods = db.GetFoods();
-
-            Menu.ItemsSource = foods;
-            Menu.DisplayMemberPath = "Name"; 
-            */
             conn.Close();
         }
 
@@ -166,42 +158,28 @@ namespace Telemeal.Windows
 
         private void ClearAll_Click(object sender, RoutedEventArgs e)
         {
-            ItemCart.Items.Clear();
-            PriceCart.Items.Clear();
+            items.Clear();
             cart.Clear();
+            itemCart.Items.Refresh();
             total = 0;
             this.totalTBox.Text = string.Format("{0:F2}", total);
             this.taxTBox.Text = string.Format("{0:F2}", total * tax);
             this.subtotalTBox.Text = string.Format("{0:F2}", (total + Double.Parse(taxTBox.Text)));
         }
 
-        private void ItemCart_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            Food selected = ItemCart.SelectedItem as Food;
-            int index = ItemCart.SelectedIndex;
-            if (ItemCart.SelectedItem != null)
-            {
-                ItemCart.Items.RemoveAt(index);
-                PriceCart.Items.RemoveAt(index);
-                cart.RemoveAt(index);
-                total -= selected.Price;
-            }
-            this.totalTBox.Text = string.Format("{0:F2}", total);
-            this.taxTBox.Text = string.Format("{0:F2}", total * tax);
-            this.subtotalTBox.Text = string.Format("{0:F2}", (total + Double.Parse(taxTBox.Text)));
-        }
 
-        private void PriceCart_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            Food selected = PriceCart.SelectedItem as Food;
-            int index = PriceCart.SelectedIndex;
-            if (PriceCart.SelectedItem != null)
+            CartItems selected = itemCart.SelectedItem as CartItems;
+            if (itemCart.SelectedItem != null)
             {
-                ItemCart.Items.RemoveAt(index);
-                PriceCart.Items.RemoveAt(index);
-                cart.RemoveAt(index);
-                total -= selected.Price;
+                int qty = items.Where(x => x.Name == selected.Name).First().Qty;
+                cart.RemoveAll(x => x.Name == selected.Name);
+                items.Remove(items.Where(x => x.Name == selected.Name).First());
+                total -= selected.Price * qty;
+                itemCart.Items.Refresh();
             }
+            
             this.totalTBox.Text = string.Format("{0:F2}", total);
             this.taxTBox.Text = string.Format("{0:F2}", total * tax);
             this.subtotalTBox.Text = string.Format("{0:F2}", (total + Double.Parse(taxTBox.Text)));
@@ -275,15 +253,19 @@ namespace Telemeal.Windows
         
         private void FoodClick(object sender, MouseButtonEventArgs e)
         {
-            ItemCart.DisplayMemberPath = "Name";
-            PriceCart.DisplayMemberPath = "Price";
-
             Grid foodGrid = sender as Grid;
             Food f = foods.Where(x => x.Name == foodGrid.Tag.ToString()).First();
+            CartItems i = new CartItems { Qty = 1, Name = f.Name, Price = f.Price };
 
             cart.Add(f);
-            ItemCart.Items.Add(f);
-            PriceCart.Items.Add(f);
+            if (items.Select(x => x.Name).Contains(i.Name))
+            {
+                items.Where(x => x.Name == f.Name).First().Qty++;
+            }
+            else
+                items.Add(i);
+
+            itemCart.Items.Refresh();
             
             total += f.Price;
             this.totalTBox.Text = string.Format("{0:F2}", total);
@@ -308,14 +290,6 @@ namespace Telemeal.Windows
                     break;
             }
             return foundElement;
-        }
-
-
-        private void lbx2_ScrollChanged(object sender, ScrollChangedEventArgs e)
-        {
-            ScrollViewer _listboxScrollViewer1 = GetDescendantByType(ItemCart, typeof(ScrollViewer)) as ScrollViewer;
-            ScrollViewer _listboxScrollViewer2 = GetDescendantByType(PriceCart, typeof(ScrollViewer)) as ScrollViewer;
-            _listboxScrollViewer1.ScrollToVerticalOffset(_listboxScrollViewer2.VerticalOffset);
         }
     }
 }
