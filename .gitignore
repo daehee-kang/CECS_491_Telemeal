@@ -268,3 +268,4 @@ paket-files/
 __pycache__/
 *.pyc
 *.lock
+.vs/Telemeal/v15/Server/sqlite3/storage.ide
