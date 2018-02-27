@@ -97,5 +97,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Telemeal\Telemeal.csproj">
+      <Project>{5847fc11-98df-446a-8c23-112884c5c2f6}</Project>
+      <Name>Telemeal</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -17,23 +17,27 @@ using Telemeal.Model;
 
 namespace Telemeal.Pages
 {
-    /// <summary>
-    /// Interaction logic for OrderPage_Page.xaml
-    /// </summary>
+    public class CartItems
+    {
+        public int Qty { get; set; }
+        public String Name { get; set; }
+        public double Price { get; set; }
+    }
     public partial class OrderPage_Page : Page
     {
         List<Food> foods = new List<Food>();
         List<Food> cart = new List<Food>();
         List<Grid> grids = new List<Grid>();
+        List<CartItems> items = new List<CartItems>();
         double tax = 0.1;
         double total = 0;
 
         public OrderPage_Page()
         {
             InitializeComponent();
-
             List<Food> categories = new List<Food>();
             dbConnection conn = new dbConnection();
+            itemCart.ItemsSource = items;
 
             categories.Add(new Food() { SubCtgr = Sub_Category.Drink });
             categories.Add(new Food() { SubCtgr = Sub_Category.Appetizer });
@@ -45,12 +49,11 @@ namespace Telemeal.Pages
             {
                 foods.Add(new Food()
                 {
-                    //FoodID = ((int)reader["id"]),
                     Name = ((string)reader["name"]),
                     Price = ((double)reader["price"]),
                     Description = ((string)reader["desc"]),
                     Img = ((string)reader["img"]),
-                    SubCtgr = categories[(int)reader["subctgr"]].SubCtgr
+                    SubCtgr = categories[int.Parse(reader["subctgr"].ToString())].SubCtgr
                 });
             }
 
@@ -68,7 +71,17 @@ namespace Telemeal.Pages
 
         private void CheckOut_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new PaymentOption_Page(total * (1 + tax), cart));
+            Button b = sender as Button;
+            Order order = new Order
+            {
+                OrderID = 1,
+                Total = total,
+                SalesTax = tax,
+                OrderDateTime = DateTime.Now,
+                IsTakeOut = false,
+                Foods = cart
+            };
+            this.NavigationService.Navigate(new PaymentOption_Page(order));
         }
 
         private void Appetizer_Click(object sender, RoutedEventArgs e)
@@ -140,42 +153,28 @@ namespace Telemeal.Pages
 
         private void ClearAll_Click(object sender, RoutedEventArgs e)
         {
-            ItemCart.Items.Clear();
-            PriceCart.Items.Clear();
+            items.Clear();
             cart.Clear();
+            itemCart.Items.Refresh();
             total = 0;
             this.totalTBox.Text = string.Format("{0:F2}", total);
             this.taxTBox.Text = string.Format("{0:F2}", total * tax);
             this.subtotalTBox.Text = string.Format("{0:F2}", (total + Double.Parse(taxTBox.Text)));
         }
 
-        private void ItemCart_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            Food selected = ItemCart.SelectedItem as Food;
-            int index = ItemCart.SelectedIndex;
-            if (ItemCart.SelectedItem != null)
-            {
-                ItemCart.Items.RemoveAt(index);
-                PriceCart.Items.RemoveAt(index);
-                cart.RemoveAt(index);
-                total -= selected.Price;
-            }
-            this.totalTBox.Text = string.Format("{0:F2}", total);
-            this.taxTBox.Text = string.Format("{0:F2}", total * tax);
-            this.subtotalTBox.Text = string.Format("{0:F2}", (total + Double.Parse(taxTBox.Text)));
-        }
 
-        private void PriceCart_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            Food selected = PriceCart.SelectedItem as Food;
-            int index = PriceCart.SelectedIndex;
-            if (PriceCart.SelectedItem != null)
+            CartItems selected = itemCart.SelectedItem as CartItems;
+            if (itemCart.SelectedItem != null)
             {
-                ItemCart.Items.RemoveAt(index);
-                PriceCart.Items.RemoveAt(index);
-                cart.RemoveAt(index);
-                total -= selected.Price;
+                int qty = items.Where(x => x.Name == selected.Name).First().Qty;
+                cart.RemoveAll(x => x.Name == selected.Name);
+                items.Remove(items.Where(x => x.Name == selected.Name).First());
+                total -= selected.Price * qty;
+                itemCart.Items.Refresh();
             }
+
             this.totalTBox.Text = string.Format("{0:F2}", total);
             this.taxTBox.Text = string.Format("{0:F2}", total * tax);
             this.subtotalTBox.Text = string.Format("{0:F2}", (total + Double.Parse(taxTBox.Text)));
@@ -249,15 +248,19 @@ namespace Telemeal.Pages
 
         private void FoodClick(object sender, MouseButtonEventArgs e)
         {
-            ItemCart.DisplayMemberPath = "Name";
-            PriceCart.DisplayMemberPath = "Price";
-
             Grid foodGrid = sender as Grid;
-            Food f = foods.Where(x => x.Name == (foodGrid.Tag.ToString())).First();
+            Food f = foods.Where(x => x.Name == foodGrid.Tag.ToString()).First();
+            CartItems i = new CartItems { Qty = 1, Name = f.Name, Price = f.Price };
 
             cart.Add(f);
-            ItemCart.Items.Add(f);
-            PriceCart.Items.Add(f);
+            if (items.Select(x => x.Name).Contains(i.Name))
+            {
+                items.Where(x => x.Name == f.Name).First().Qty++;
+            }
+            else
+                items.Add(i);
+
+            itemCart.Items.Refresh();
 
             total += f.Price;
             this.totalTBox.Text = string.Format("{0:F2}", total);
@@ -282,14 +285,6 @@ namespace Telemeal.Pages
                     break;
             }
             return foundElement;
-        }
-
-
-        private void lbx2_ScrollChanged(object sender, ScrollChangedEventArgs e)
-        {
-            ScrollViewer _listboxScrollViewer1 = GetDescendantByType(ItemCart, typeof(ScrollViewer)) as ScrollViewer;
-            ScrollViewer _listboxScrollViewer2 = GetDescendantByType(PriceCart, typeof(ScrollViewer)) as ScrollViewer;
-            _listboxScrollViewer1.ScrollToVerticalOffset(_listboxScrollViewer2.VerticalOffset);
         }
     }
 }

@@ -23,9 +23,27 @@
                             <Button Name="CheckOut" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="30" Width="144" Margin="15, 10" Click="CheckOut_Click">Check Out</Button>
                         </WrapPanel>
                     </DockPanel>
-                    <Button Name="ClearAll" Width="100" Height="25" Margin="10, 10, 10, -175" Click="ClearAll_Click">Clear All</Button>
-                    <ListBox Name="ItemCart" DockPanel.Dock="Left" Height="195" Width="115" Margin="-120, 0, 10, 10" VerticalAlignment="Top" MouseDoubleClick="ItemCart_MouseDoubleClick" ScrollViewer.VerticalScrollBarVisibility="Disabled"></ListBox>
-                    <ListBox Name="PriceCart" DockPanel.Dock="Right" Height="195" Width="55" VerticalAlignment="Top" MouseDoubleClick="PriceCart_MouseDoubleClick" ScrollViewer.ScrollChanged="lbx2_ScrollChanged"></ListBox>
+                    <Button DockPanel.Dock="Bottom" Name="ClearAll" Width="100" Height="25" Click="ClearAll_Click">Clear All</Button>
+                    <ScrollViewer Height="195">
+                        <DataGrid IsReadOnly="True" Background="Beige" Name="itemCart" FontSize="10" AutoGenerateColumns="False" >
+                            <DataGrid.ColumnHeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="FontSize" Value="10"/>
+                                    <Setter Property="Height" Value="20"/>
+                                </Style>
+                            </DataGrid.ColumnHeaderStyle>
+                            <DataGrid.Resources>
+                                <Style TargetType="DataGridRow">
+                                    <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                                </Style>
+                            </DataGrid.Resources>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Width="35" Header="Qty." Binding="{Binding Qty}"/>
+                                <DataGridTextColumn Width="90" Header="Name" Binding="{Binding Name}"/>
+                                <DataGridTextColumn Width="40" Header="Price" Binding="{Binding Price}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </ScrollViewer>
                 </DockPanel>
             </Border>
         </Viewbox>
