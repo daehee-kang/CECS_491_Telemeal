@@ -25,6 +25,11 @@ namespace Telemeal.Windows
             Loaded += StartUp_Loaded;
         }
 
+        /// <summary>
+        /// Loads initial page as LogIn_Page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StartUp_Loaded(Object sender, RoutedEventArgs e)
         {
             Main.NavigationService.Navigate(new LogIn_Page());

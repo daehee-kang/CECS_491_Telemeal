@@ -24,18 +24,17 @@ namespace Telemeal.Pages
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Intro_Click(object sender, RoutedEventArgs e)
         {
-            for(int i = 0; i < 3; i++)
+            while(this.NavigationService.CanGoBack)
             {
                 this.NavigationService.GoBack();
             }
-        }
-
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            
         }
     }
 }

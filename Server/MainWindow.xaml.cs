@@ -27,7 +27,7 @@ namespace TelemealReceive
     {
         public MainWindow()
         {
-            InitializeComponent();
+            //InitializeComponent();
 
             IPEndPoint ep = new IPEndPoint(IPAddress.Loopback, 1234);
             TcpListener listener = new TcpListener(ep);
@@ -45,9 +45,9 @@ namespace TelemealReceive
 
                 // Read the message, and perform different actions  
                 message = cleanMessage(buffer);
-                Order order = JsonConvert.DeserializeObject<Order>(message);
+                //Order order = JsonConvert.DeserializeObject<Order>(message);
 
-                Console.WriteLine(order.OrderID);
+                //Console.WriteLine(order.OrderID);
             }
         }
 

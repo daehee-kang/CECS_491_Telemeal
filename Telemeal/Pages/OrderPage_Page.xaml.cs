@@ -17,17 +17,28 @@ using Telemeal.Model;
 
 namespace Telemeal.Pages
 {
+    /// <summary>
+    /// Helper class for item cart
+    /// </summary>
     public class CartItems
     {
         public int Qty { get; set; }
         public String Name { get; set; }
         public double Price { get; set; }
     }
+
+    /// <summary>
+    /// This page will show menu containing food items. Each food item will be described by the name, price, description, image, and user-defined category
+    /// </summary>
     public partial class OrderPage_Page : Page
     {
+        //foods will be the storage of all the food objects that are stored in the database and are shown in the menu.
         List<Food> foods = new List<Food>();
+        //cart will be the storage for the food items that the user put in the item cart
         List<Food> cart = new List<Food>();
+        //grids defines the layout of the each menu object 
         List<Grid> grids = new List<Grid>();
+        //items will be the copy of the item cart with appropriate data binding format
         List<CartItems> items = new List<CartItems>();
         double tax = 0.1;
         double total = 0;
