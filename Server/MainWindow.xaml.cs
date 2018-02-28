@@ -17,8 +17,9 @@ using System.Net.Mail;
 using System.Net.Security;
 using System.Net.Sockets;
 using Newtonsoft.Json;
+using Telemeal.Model;
 
-namespace TelemealReceive
+namespace Server
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
