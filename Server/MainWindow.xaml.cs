@@ -29,7 +29,10 @@ namespace Server
         public MainWindow()
         {
             InitializeComponent();
+        }
 
+        public void WaitForResponse()
+        {
             IPEndPoint ep = new IPEndPoint(IPAddress.Loopback, 1234);
             TcpListener listener = new TcpListener(ep);
             listener.Start();
