@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using DotNetBrowser;
+using DotNetBrowser.WPF;
 
 namespace Telemeal.Pages
 {
@@ -20,9 +10,13 @@ namespace Telemeal.Pages
     /// </summary>
     public partial class PaypalPmt_Page : Page
     {
+        BrowserView webView;
         public PaypalPmt_Page()
         {
             InitializeComponent();
+            webView = new WPFBrowserView(BrowserFactory.Create());
+            mainLayout.Children.Add((UIElement)webView.GetComponent());
+            webView.Browser.LoadURL("http://web.csulb.edu/~phuynh/cecs491b/index.html");
         }
     }
 }
