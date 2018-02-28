@@ -22,12 +22,16 @@ namespace Telemeal.Windows
     /// </summary>
     public partial class ViewDB : Window
     {
+        //Open the database connection
         dbConnection conn = new dbConnection();
         public ViewDB()
         {
             InitializeComponent();
+            //foods will get the data from the database
             List<FoodwID> foods = new List<FoodwID>();
+            //retrieve data
             SQLiteDataReader reader = conn.ViewTable("Food");
+            //iterate through the data and initailize FoodwID object with appropriate fields
             while (reader.Read())
             {
                 foods.Add(new FoodwID
@@ -40,9 +44,11 @@ namespace Telemeal.Windows
                     subctgr = (Sub_Category) Enum.Parse(typeof(Sub_Category), reader["subctgr"].ToString())
                 });
             }
+            //bind data grid
             dgFoods.ItemsSource = foods;
         }
     }
+    //FoodwID helper class is required as Food class does not have placeholder for the ID
     public class FoodwID {
         public int id { get; set; }
         public string name { get; set; }

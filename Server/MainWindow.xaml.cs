@@ -28,8 +28,12 @@ namespace Server
     {
         public MainWindow()
         {
+<<<<<<< HEAD
             InitializeComponent();
         }
+=======
+            //InitializeComponent();
+>>>>>>> master
 
         public void WaitForResponse()
         {
@@ -49,9 +53,9 @@ namespace Server
 
                 // Read the message, and perform different actions  
                 message = cleanMessage(buffer);
-                Order order = JsonConvert.DeserializeObject<Order>(message);
+                //Order order = JsonConvert.DeserializeObject<Order>(message);
 
-                Console.WriteLine(order.OrderID);
+                //Console.WriteLine(order.OrderID);
             }
         }
 

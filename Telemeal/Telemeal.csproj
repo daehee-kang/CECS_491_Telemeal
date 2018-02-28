@@ -141,33 +141,6 @@
     <Compile Include="Pages\PaypalPmt_Page.xaml.cs">
       <DependentUpon>PaypalPmt_Page.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\CashPmt.xaml.cs">
-      <DependentUpon>CashPmt.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\EmployeeDBWindow.xaml.cs">
-      <DependentUpon>EmployeeDBWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\EmployeeLogin.xaml.cs">
-      <DependentUpon>EmployeeLogin.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\FoodDBWindow.xaml.cs">
-      <DependentUpon>FoodDBWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\LogIn.xaml.cs">
-      <DependentUpon>LogIn.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\ManagerOptions.xaml.cs">
-      <DependentUpon>ManagerOptions.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\OrderPage.xaml.cs">
-      <DependentUpon>OrderPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\PaymentOptions.xaml.cs">
-      <DependentUpon>PaymentOptions.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\PaypalPmt.xaml.cs">
-      <DependentUpon>PaypalPmt.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Windows\StartUp.xaml.cs">
       <DependentUpon>StartUp.xaml</DependentUpon>
     </Compile>
@@ -238,42 +211,6 @@
     <Page Include="Pages\PaypalPmt_Page.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Windows\CashPmt.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\EmployeeDBWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\EmployeeLogin.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\FoodDBWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\LogIn.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\ManagerOptions.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\OrderPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\PaymentOptions.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\PaypalPmt.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\StartUp.xaml">
       <Generator>MSBuild:Compile</Generator>

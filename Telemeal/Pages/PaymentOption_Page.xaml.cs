@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Telemeal.Model;
+using Newtonsoft.Json;
 
 namespace Telemeal.Pages
 {
@@ -21,43 +22,30 @@ namespace Telemeal.Pages
     /// </summary>
     public partial class PaymentOption_Page : Page
     {
-        private double dueAmount;
-        private List<Food> foods = new List<Food>();
-
-        public PaymentOption_Page(double due)
+        Order mOrder;
+        public PaymentOption_Page(Order o)
         {
-            dueAmount = due;
             InitializeComponent();
-            AmountDue.Text = "$" + string.Format("{0:F2}", dueAmount);
+            mOrder = o;
+            List<CartItems> items = new List<CartItems>();
+            foreach (Food f in o.Foods)
+            {
+                CartItems i = new CartItems { Qty = 1, Name = f.Name, Price = f.Price };
+                if (items.Select(x => x.Name).Contains(i.Name))
+                {
+                    items.Where(x => x.Name == f.Name).First().Qty++;
+                }
+                else
+                    items.Add(i);
+            }
+            itemCart.ItemsSource = items;
+            AmountDue.Text = o.SubTotal().ToString("F2");
+            MessageBox.Show(ConvertJSON());
         }
 
-        public PaymentOption_Page(double due, List<Food> f):this(due)
+        private string ConvertJSON()
         {
-            var grid = new GridView();
-
-            Cart.View = grid;
-
-            grid.Columns.Add(new GridViewColumn
-            {
-                Header = "Name",
-                DisplayMemberBinding = new Binding("Name")
-            });
-            grid.Columns.Add(new GridViewColumn
-            {
-                Header = "Price",
-                DisplayMemberBinding = new Binding("Price")
-            });
-
-
-            foreach (Food food in f)
-            {
-                foods.Add(food);
-            }
-
-            foreach (Food food in foods)
-            {
-                Cart.Items.Add(food);
-            }
+            return JsonConvert.SerializeObject(mOrder);
         }
 
         private void Menu_Click(object sender, RoutedEventArgs e)
