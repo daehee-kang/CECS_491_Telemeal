@@ -10,7 +10,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-//using System.Windows.Shapes;
 using Telemeal.Model;
 using System.Data.SQLite;
 using Microsoft.Win32;
@@ -25,36 +24,47 @@ namespace Telemeal.Pages
     /// <summary>
     /// Interaction logic for FoodDBTestWindow.xaml
     /// </summary>
-
-
-
     public partial class FoodDBWindow_Page : Page
     {
+        //Error Message for Missing Required Fields
         private static string ERROR_CODE_MRF = "Required Fields: Name, Price, Category -- ";
+        //Error Meesage for Invalid Data Type
         private static string ERROR_CODE_IDT = "Invalid Datatype: ";
+        //open the connection to database
         dbConnection conn = new dbConnection();
+        //list of food for viewing the database and listing to the edit/remove by name selector
         List<Food> lFood = new List<Food>();
+        //list of category for listing to the edit/add category to the food item
         Sub_Category[] sub_list = new Sub_Category[] { Sub_Category.Drink, Sub_Category.Appetizer, Sub_Category.Main, Sub_Category.Dessert };
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public FoodDBWindow_Page()
         {
             InitializeComponent();
 
+            //fill categories into the comboboxes for adding and editing category of the food
             foreach (Sub_Category s in sub_list)
             {
                 cbAddCategory.Items.Add(s);
                 cbEditCategory.Items.Add(s);
             }
 
-            PopulateCBEditFoodID();
+            //populate food name in the combobox for edit/remove food item
+            PopulateCBEditFoodName();
         }
 
-        private void PopulateCBEditFoodID()
+        /// <summary>
+        /// Helper method for populating food item and updating the combobox in the edit/remove by name
+        /// </summary>
+        private void PopulateCBEditFoodName()
         {
+            //get the data from the table
             SQLiteDataReader reader = conn.ViewTable("Food");
+            //iterate through the data retrieved
             while (reader.Read())
             {
-                Console.WriteLine($"{reader["id"].ToString()}, {reader["name"].ToString()}");
                 int id = int.Parse(reader["id"].ToString());
                 string name = (string)reader["name"];
                 double price = (double)reader["price"];
@@ -250,7 +260,7 @@ namespace Telemeal.Pages
 
                 ClearEditFields();
 
-                PopulateCBEditFoodID();
+                PopulateCBEditFoodName();
             }
             catch (Exception ex)
             {

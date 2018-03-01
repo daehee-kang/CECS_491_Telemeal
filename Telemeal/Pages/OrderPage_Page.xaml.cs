@@ -20,7 +20,7 @@ namespace Telemeal.Pages
     /// <summary>
     /// Helper class for item cart
     /// </summary>
-    public class CartItems
+    public class CartItem
     {
         public int Qty { get; set; }
         public String Name { get; set; }
@@ -37,7 +37,7 @@ namespace Telemeal.Pages
         //itemGrids defines the layout of the each menu object 
         List<Grid> itemGrids = new List<Grid>();
         //items will be the copy of the item cart with appropriate data binding format
-        List<CartItems> cartItems = new List<CartItems>();
+        List<CartItem> cartItems = new List<CartItem>();
         //order will track the information of the food items which user put in the cart
         Order order = new Order { OrderID = 1, SalesTax = 0.1, Total = 0, Foods = new List<Food>(), IsTakeOut = false, OrderDateTime = new DateTime() };
 
@@ -210,7 +210,7 @@ namespace Telemeal.Pages
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             //obtain selected item information from the cart
-            CartItems selected = itemCart.SelectedItem as CartItems;
+            CartItem selected = itemCart.SelectedItem as CartItem;
             //item selection validator
             if (itemCart.SelectedItem != null)
             {
@@ -330,7 +330,7 @@ namespace Telemeal.Pages
             //get the food information which matches with grid user clicked.
             Food f = menu.Where(x => x.Name == foodGrid.Tag.ToString()).First();
             //create food item appropriate for adding to the cart
-            CartItems i = new CartItems { Qty = 1, Name = f.Name, Price = f.Price };
+            CartItem i = new CartItem { Qty = 1, Name = f.Name, Price = f.Price };
 
             //add food item into the order
             order.Foods.Add(f);
