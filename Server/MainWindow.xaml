@@ -7,6 +7,23 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <Border BorderBrush="Black" BorderThickness="1.0" DockPanel.Dock="Right">
+            <ScrollViewer Height="400">
+                <DataGrid IsReadOnly="True" Name="itemCart" FontSize="10" AutoGenerateColumns="False" Width="515">
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="FontSize" Value="15"/>
+                            <Setter Property="Height" Value="30"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="50" Header="ID." Binding="{Binding OrderItemID}"/>
+                        <DataGridTextColumn Width="160" Header="Name" Binding="{Binding FoodName}"/>
+                        <DataGridTextColumn Width="150" Header="Time Purchased" Binding="{Binding TimePurchased}"/>
+                        <DataGridCheckBoxColumn Width="100" Header="Takeout" Binding="{Binding IsTakeOut}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ScrollViewer>
+        </Border>
     </Grid>
 </Window>
