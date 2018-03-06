@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Telemeal.Model;
 using Newtonsoft.Json;
+using System.Net.Sockets;
 
 namespace Telemeal.Pages
 {
@@ -84,6 +85,7 @@ namespace Telemeal.Pages
         /// <param name="e"></param>
         private void Cash_Click(object sender, RoutedEventArgs e)
         {
+            byte[] bytes = sendMessage(System.Text.Encoding.Unicode.GetBytes(ConvertJSON()));
             this.NavigationService.Navigate(new CashPmt_Page());
         }
 
@@ -96,6 +98,29 @@ namespace Telemeal.Pages
         private void Paypal_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new PaypalPmt_Page());
+        }
+
+        private static byte[] sendMessage(byte[] messageBytes)
+        {
+            const int bytesize = 1024 * 1024;
+            try // Try connecting and send the message bytes  
+            {
+                System.Net.Sockets.TcpClient client = new System.Net.Sockets.TcpClient("127.0.0.1", 1234); // Create a new connection  
+                NetworkStream stream = client.GetStream();
+
+                stream.Write(messageBytes, 0, messageBytes.Length); // Write the bytes  
+                messageBytes = new byte[bytesize]; // Clear the message   
+
+                // Clean up  
+                stream.Dispose();
+                client.Close();
+            }
+            catch (Exception e) // Catch exceptions  
+            {
+                MessageBox.Show(e.Message);
+            }
+
+            return messageBytes; // Return response  
         }
     }
 }
