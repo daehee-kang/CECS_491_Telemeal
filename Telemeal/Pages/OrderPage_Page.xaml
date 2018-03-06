@@ -5,13 +5,13 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Telemeal.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
+      d:DesignHeight="300" d:DesignWidth="500"
       Title="OrderPage_Page">
 
     <DockPanel Background="Beige">
         <Viewbox DockPanel.Dock="Right">
             <Border>
-                <DockPanel Name="ShoppingCart" Width="175">
+                <DockPanel Name="ShoppingCart" Width="180">
                     <DockPanel Name="CheckOutInfo" DockPanel.Dock="Bottom">
                         <WrapPanel Width="175">
                             <Label Width="60" HorizontalAlignment="Center">Total:</Label>
@@ -28,17 +28,19 @@
                         <DataGrid IsReadOnly="True" Background="Beige" Name="itemCart" FontSize="10" AutoGenerateColumns="False" >
                             <DataGrid.ColumnHeaderStyle>
                                 <Style TargetType="DataGridColumnHeader">
-                                    <Setter Property="FontSize" Value="10"/>
+                                    <Setter Property="FontSize" Value="8"/>
                                     <Setter Property="Height" Value="20"/>
                                 </Style>
                             </DataGrid.ColumnHeaderStyle>
                             <DataGrid.Resources>
                                 <Style TargetType="DataGridRow">
+                                    <Setter Property="FontSize" Value="8"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
                                     <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
                                 </Style>
                             </DataGrid.Resources>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Width="35" Header="Qty." Binding="{Binding Qty}"/>
+                                <DataGridTextColumn Width="30" Header="Qty." Binding="{Binding Qty}"/>
                                 <DataGridTextColumn Width="90" Header="Name" Binding="{Binding Name}"/>
                                 <DataGridTextColumn Width="40" Header="Price" Binding="{Binding Price}"/>
                             </DataGrid.Columns>

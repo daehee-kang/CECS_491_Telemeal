@@ -120,7 +120,7 @@ namespace Telemeal.Model
             
             string cmd = $"UPDATE Food " +
                 $"SET price = @price, desc = @desc, img = @img, mainctgr = @mainCtr, subctgr = @subCtr " +
-                $"WHERE name = @@name";
+                $"WHERE name = @name";
             sqlite_cmd = new SQLiteCommand(cmd, sqlite_conn);
 
             sqlite_cmd.Parameters.AddWithValue("@name", name);

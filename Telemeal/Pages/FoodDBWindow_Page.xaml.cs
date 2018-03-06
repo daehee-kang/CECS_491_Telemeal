@@ -275,6 +275,7 @@ namespace Telemeal.Pages
             {
                 MessageBox.Show(ex.ToString());
             }
+            ClearEditFields();
         }
 
         /// <summary>

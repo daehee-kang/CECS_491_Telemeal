@@ -54,7 +54,7 @@ namespace Telemeal.Pages
             itemCart.ItemsSource = items;
             //bind subtotal to the AmountDue
             AmountDue.Text = order.SubTotal().ToString("F2");
-            MessageBox.Show(ConvertJSON());
+            //MessageBox.Show(ConvertJSON());
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Telemeal.Pages
             const int bytesize = 1024 * 1024;
             try // Try connecting and send the message bytes  
             {
-                System.Net.Sockets.TcpClient client = new System.Net.Sockets.TcpClient("127.0.0.1", 1234); // Create a new connection  
+                TcpClient client = new TcpClient("127.0.0.1", 1234); // Create a new connection  
                 NetworkStream stream = client.GetStream();
 
                 stream.Write(messageBytes, 0, messageBytes.Length); // Write the bytes  
