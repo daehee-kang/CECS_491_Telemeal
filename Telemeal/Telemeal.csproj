@@ -126,6 +126,7 @@
     <Compile Include="Model\dbConnection.cs" />
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\Food.cs" />
+    <Compile Include="Model\Invoice.cs" />
     <Compile Include="Model\Order.cs" />
     <Compile Include="Pages\CashPmt_Page.xaml.cs">
       <DependentUpon>CashPmt_Page.xaml</DependentUpon>
@@ -157,8 +158,8 @@
     <Compile Include="Pages\PaypalPmt_Page.xaml.cs">
       <DependentUpon>PaypalPmt_Page.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Invoice.xaml.cs">
-      <DependentUpon>Invoice.xaml</DependentUpon>
+    <Compile Include="Windows\Invoice_Window.xaml.cs">
+      <DependentUpon>Invoice_Window.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\StartUp.xaml.cs">
       <DependentUpon>StartUp.xaml</DependentUpon>
@@ -235,7 +236,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Windows\Invoice.xaml">
+    <Page Include="Windows\Invoice_Window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

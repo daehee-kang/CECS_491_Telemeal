@@ -25,6 +25,7 @@ namespace Telemeal.Pages
     {
         //order information is passed from the OrderPage
         Order order;
+
         /// <summary>
         /// Constructor for PaymentOption_Page
         /// This constructor will initialize the component in the view, and show cart and price information on the screen
@@ -86,6 +87,7 @@ namespace Telemeal.Pages
         private void Cash_Click(object sender, RoutedEventArgs e)
         {
             byte[] bytes = sendMessage(System.Text.Encoding.Unicode.GetBytes(ConvertJSON()));
+            order.Pmethod = PaymentMethod.Cash;
             this.NavigationService.Navigate(new CashPmt_Page());
         }
 
@@ -97,6 +99,7 @@ namespace Telemeal.Pages
         /// <param name="e"></param>
         private void Paypal_Click(object sender, RoutedEventArgs e)
         {
+            order.Pmethod = PaymentMethod.Paypal;
             this.NavigationService.Navigate(new PaypalPmt_Page());
         }
 

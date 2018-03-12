@@ -69,6 +69,35 @@ namespace Telemeal.Model
         }
 
         /// <summary>
+        /// This method will create new order table in the database
+        /// id: primary key
+        /// total, datetime: unique key
+        /// </summary>
+        public void OrderTable()
+        {
+            string cmd = $"CREATE TABLE Order " +
+                $"(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                $"total DOUBLE NOT NULL, " +
+                $"tax DOUBLE, " +
+                $"datetime DATETIME NOT NULL, " +
+                $"takeout BOOL, " +
+                $"CONSTRAINT total_datetime_unique_key UNIQUE (total, datetime))";
+            sqlite_cmd = new SQLiteCommand(cmd, sqlite_conn);
+            sqlite_cmd.ExecuteNonQuery();
+        }
+
+        public void FoodOrderTable()
+        {
+            string cmd = $"CREATE TABLE FoodOrder " +
+                $"(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                $"total DOUBLE NOT NULL, " +
+                $"tax DOUBLE, " +
+                $"datetime DATETIME NOT NULL, " +
+                $"takeout BOOL, " +
+                $"CONSTRAINT total_datetime_unique_key UNIQUE (total, datetime))";
+        }
+
+        /// <summary>
         /// this method will insert new food item into the food table
         /// </summary>
         /// <param name="food">Food object to be added to the table</param>
@@ -188,6 +217,17 @@ namespace Telemeal.Model
             sqlite_cmd = new SQLiteCommand(cmd, sqlite_conn);
             sqlite_dr = sqlite_cmd.ExecuteReader();
             return sqlite_dr;
+        }
+
+        public void CreateInvoiceTable()
+        {
+            string cmd = $"CREATE TABLE Invoice " +
+               $"(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+               $"invoiceDate DATE NOT NULL, " +
+               $"privilege BOOL, " +
+               $"PRIMARY KEY(id))";
+            sqlite_cmd = new SQLiteCommand(cmd, sqlite_conn);
+            sqlite_cmd.ExecuteNonQuery();
         }
 
         public void Close()
