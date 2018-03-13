@@ -13,9 +13,8 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Width="40" Header="Order ID" Binding="{Binding OrderID}"/>
                         <DataGridTextColumn Width="50" Header="Total" Binding="{Binding Total}"/>
-                        <DataGridTextColumn Width="200" Header="Date and Time" Binding="{Binding OrderDataTime}"/>
+                        <DataGridTextColumn Width="300" Header="Date and Time" Binding="{Binding OrderDataTime}"/>
                         <DataGridTextColumn Width="100" Header="TakeOut" Binding="{Binding IsTakeOut}"/>
-                        <DataGridTextColumn Width="150" Header="Payment Method" Binding="{Binding Pmethod}"/>
                         <DataGridTextColumn Width="200" Header="Order Items" Binding="{Binding Foods}"/>
                     </DataGrid.Columns>
                 </DataGrid>

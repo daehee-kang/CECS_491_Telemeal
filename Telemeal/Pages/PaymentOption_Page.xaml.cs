@@ -27,7 +27,17 @@ namespace Telemeal.Pages
     /// </summary>
     public partial class PaymentOption_Page : Page
     {
+<<<<<<< HEAD
         Order mOrder;
+=======
+        //order information is passed from the OrderPage
+        Order order;
+        /// <summary>
+        /// Constructor for PaymentOption_Page
+        /// This constructor will initialize the component in the view, and show cart and price information on the screen
+        /// </summary>
+        /// <param name="o">Order object passed for visualization of cart items and price information</param>
+>>>>>>> parent of d274ee6... orderpage changed
         public PaymentOption_Page(Order o)
         {
             InitializeComponent();
@@ -61,6 +71,7 @@ namespace Telemeal.Pages
 
         private void Cash_Click(object sender, RoutedEventArgs e)
         {
+<<<<<<< HEAD
             //byte[] bytes = sendMessage(System.Text.Encoding.Unicode.GetBytes(ConvertJSON()));
             //WebRequest request = WebRequest.Create("ftp://18.216.172.183");
             //request.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
@@ -78,6 +89,9 @@ namespace Telemeal.Pages
                 MessageBox.Show(resp.StatusCode.ToString());
               
             }*/
+=======
+            byte[] bytes = sendMessage(System.Text.Encoding.Unicode.GetBytes(ConvertJSON()));
+>>>>>>> parent of d274ee6... orderpage changed
             this.NavigationService.Navigate(new CashPmt_Page());
         }
 
