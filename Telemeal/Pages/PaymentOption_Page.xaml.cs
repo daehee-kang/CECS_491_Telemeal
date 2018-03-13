@@ -91,6 +91,9 @@ namespace Telemeal.Pages
             }*/
 =======
             byte[] bytes = sendMessage(System.Text.Encoding.Unicode.GetBytes(ConvertJSON()));
+<<<<<<< HEAD
+>>>>>>> parent of d274ee6... orderpage changed
+=======
 >>>>>>> parent of d274ee6... orderpage changed
             this.NavigationService.Navigate(new CashPmt_Page());
         }
