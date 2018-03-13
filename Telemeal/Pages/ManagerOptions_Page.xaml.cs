@@ -34,5 +34,15 @@ namespace Telemeal.Pages
         {
             this.NavigationService.Navigate(new FoodDBWindow_Page());
         }
+
+        private void Invoice_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.GoBack();
+        }
     }
 }

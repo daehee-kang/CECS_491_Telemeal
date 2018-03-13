@@ -6,25 +6,25 @@
         xmlns:local="clr-namespace:Telemeal.Windows"
         mc:Ignorable="d"
         Title="ViewDB" Height="1000" Width="1600" WindowState="Maximized">
-    <Viewbox>
     <ScrollViewer>
-        <DataGrid Name="dgFoods" FontSize="15" AutoGenerateColumns="False" >
-            <DataGrid.Columns>
-                <DataGridTextColumn Width="40" Header="ID" Binding="{Binding id}"/>
-                <DataGridTextColumn Width="200" Header="Name" Binding="{Binding name}"/>
-                <DataGridTextColumn Width="50" Header="Price" Binding="{Binding price}"/>
-                <DataGridTextColumn Width="600" Header="Description" Binding="{Binding desc}"/>
-                <DataGridTextColumn Width="400" Header="Image Path" Binding="{Binding img}"/>
-                <DataGridTemplateColumn Header="Image">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Image Source="{Binding img}" Height="30" Margin="10" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTextColumn Width="100" Header="Category" Binding="{Binding subctgr}"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <Viewbox>
+            <DataGrid Name="dgFoods" FontSize="15" AutoGenerateColumns="False" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="40" Header="ID" Binding="{Binding id}"/>
+                    <DataGridTextColumn Width="200" Header="Name" Binding="{Binding name}"/>
+                    <DataGridTextColumn Width="50" Header="Price" Binding="{Binding price}"/>
+                    <DataGridTextColumn Width="600" Header="Description" Binding="{Binding desc}"/>
+                    <DataGridTextColumn Width="400" Header="Image Path" Binding="{Binding img}"/>
+                    <DataGridTemplateColumn Header="Image">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding img}" Height="30" Margin="10" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Width="100" Header="Category" Binding="{Binding subctgr}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Viewbox>
     </ScrollViewer>
-    </Viewbox>
 </Window>
