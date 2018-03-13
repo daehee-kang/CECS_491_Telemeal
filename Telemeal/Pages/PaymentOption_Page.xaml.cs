@@ -12,9 +12,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PayPal;
 using Telemeal.Model;
 using Newtonsoft.Json;
 using System.Net.Sockets;
+using System.IO;
+using System.Net;
+using System.Data;
 
 namespace Telemeal.Pages
 {
@@ -24,6 +28,13 @@ namespace Telemeal.Pages
     public partial class PaymentOption_Page : Page
     {
         Order mOrder;
+        //order information is passed from the OrderPage
+        Order order;
+        /// <summary>
+        /// Constructor for PaymentOption_Page
+        /// This constructor will initialize the component in the view, and show cart and price information on the screen
+        /// </summary>
+        /// <param name="o">Order object passed for visualization of cart items and price information</param>
         public PaymentOption_Page(Order o)
         {
             InitializeComponent();
@@ -51,11 +62,29 @@ namespace Telemeal.Pages
 
         private void Menu_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show(OrderPath(Environment.CurrentDirectory));
             this.NavigationService.GoBack();
         }
 
         private void Cash_Click(object sender, RoutedEventArgs e)
         {
+            //byte[] bytes = sendMessage(System.Text.Encoding.Unicode.GetBytes(ConvertJSON()));
+            //WebRequest request = WebRequest.Create("ftp://18.216.172.183");
+            //request.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
+            //request.Credentials = new NetworkCredential("cecs327", "cecs327");
+
+            WriteFile(OrderPath(Environment.CurrentDirectory));
+            using (WebClient client = new WebClient())
+            {
+                client.Credentials = new NetworkCredential("cecs327", "cecs327");
+                client.UploadFile("ftp://18.216.172.183/Order/order.txt", "STOR", OrderPath(Environment.CurrentDirectory));
+
+            }
+            /*using (var resp = (FtpWebResponse)request.GetResponse())
+            {
+                MessageBox.Show(resp.StatusCode.ToString());
+              
+            }*/
             byte[] bytes = sendMessage(System.Text.Encoding.Unicode.GetBytes(ConvertJSON()));
             this.NavigationService.Navigate(new CashPmt_Page());
         }
@@ -86,6 +115,56 @@ namespace Telemeal.Pages
             }
 
             return messageBytes; // Return response  
+        }
+
+        private string OrderPath(string path)
+        {
+            string relPath = "";
+            int counter = 0;
+            bool pathFound = false;
+            String[] split = path.Split('\\');
+
+            for (int i = 0; i < split.Length; i++)
+            {
+                if (split[i] == "CECS_491_Telemeal")
+                {
+                    counter = i;
+                    pathFound = true;
+                    break;
+                }
+            }
+
+            if (pathFound)
+            {
+                for (int i = 0; i <= counter; i++)
+                {
+                    if (i != 0)
+                    {
+                        relPath += "/";
+                    }
+                    relPath += split[i];
+                    if (i == counter)
+                    {
+                        relPath += "/";
+                        relPath += "order.txt";
+                    }
+                }
+            }
+
+            return relPath;
+        }
+
+        private void WriteFile(string path)
+        {
+            StreamWriter output = new StreamWriter(path);
+
+            //Writes the beginning statement to the specified file in output
+            //deletes output object when done
+            using (output)
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(output, ConvertJSON());
+            }
         }
     }
 }
