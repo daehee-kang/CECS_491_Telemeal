@@ -40,7 +40,7 @@ namespace Telemeal.Model
         public void CreateFoodTable()
         {
             string cmd = $"CREATE TABLE Food " +
-                $"(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                $"(food_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 $"name VARCHAR(50) NOT NULL, " +
                 $"price DOUBLE NOT NULL, " +
                 $"desc VARCHAR(200), " +
@@ -59,7 +59,7 @@ namespace Telemeal.Model
         public void CreateEmployeeTable()
         {
             string cmd = $"CREATE TABLE Employee " +
-                $"(id INTEGER NOT NULL, " +
+                $"(employee_id INTEGER NOT NULL, " +
                 $"name VARCHAR(50) NOT NULL, " +
                 $"position VARCHAR(50), " +
                 $"privilege BOOL, " +
@@ -76,7 +76,7 @@ namespace Telemeal.Model
         public void OrderTable()
         {
             string cmd = $"CREATE TABLE Order " +
-                $"(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                $"(order_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 $"total DOUBLE NOT NULL, " +
                 $"tax DOUBLE, " +
                 $"datetime DATETIME NOT NULL, " +
@@ -89,12 +89,10 @@ namespace Telemeal.Model
         public void FoodOrderTable()
         {
             string cmd = $"CREATE TABLE FoodOrder " +
-                $"(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                $"total DOUBLE NOT NULL, " +
-                $"tax DOUBLE, " +
-                $"datetime DATETIME NOT NULL, " +
-                $"takeout BOOL, " +
-                $"CONSTRAINT total_datetime_unique_key UNIQUE (total, datetime))";
+                $"(order_id INTEGER NOT NULL, " +
+                $"food_id INTEGER NOT NULL, " +
+                $"quantity INTEGER NOT NULL, " +
+                $"FOREIGN KEY (order_id, food_id) REFERENCES Order(order_id), Food(food_id))";
         }
 
         /// <summary>

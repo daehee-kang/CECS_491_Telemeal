@@ -71,6 +71,7 @@ namespace Server
 
                 // Read the message, and perform different actions  
                 message = cleanMessage(buffer);
+                MessageBox.Show(message);
                 Order order = JsonConvert.DeserializeObject<Order>(message);
 
                 foreach(Food f in order.Foods)
