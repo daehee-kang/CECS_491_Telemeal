@@ -35,6 +35,7 @@ namespace Telemeal.Pages
         /// This constructor will initialize the component in the view, and show cart and price information on the screen
         /// </summary>
         /// <param name="o">Order object passed for visualization of cart items and price information</param>
+
         public PaymentOption_Page(Order o)
         {
             InitializeComponent();
@@ -85,7 +86,8 @@ namespace Telemeal.Pages
                 MessageBox.Show(resp.StatusCode.ToString());
               
             }*/
-            byte[] bytes = sendMessage(System.Text.Encoding.Unicode.GetBytes(ConvertJSON()));
+            //byte[] bytes = sendMessage(System.Text.Encoding.Unicode.GetBytes(ConvertJSON()));
+
             this.NavigationService.Navigate(new CashPmt_Page());
         }
 

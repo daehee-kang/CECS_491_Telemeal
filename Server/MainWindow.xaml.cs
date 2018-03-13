@@ -51,7 +51,7 @@ namespace Server
             InitializeComponent();
             itemCart.ItemsSource = items;
             //IsBackground makes sure thread does not keep running after window has been closed
-            //new Thread(() => WaitForResponse()) { IsBackground = true }.Start() ;
+            new Thread(() => WaitForResponse()) { IsBackground = true }.Start() ;
         }
 
         public void WaitForResponse()
@@ -101,8 +101,6 @@ namespace Server
                 {
                     itemCart.Items.Refresh();
                 });
-
-
             }
         }
 
