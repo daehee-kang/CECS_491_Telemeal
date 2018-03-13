@@ -2,8 +2,6 @@
 using System.Windows.Controls;
 using DotNetBrowser;
 using DotNetBrowser.WPF;
-using PayPal.Api;
-using System.Collections.Generic;
 
 namespace Telemeal.Pages
 {
@@ -19,14 +17,6 @@ namespace Telemeal.Pages
             webView = new WPFBrowserView(BrowserFactory.Create());
             mainLayout.Children.Add((UIElement)webView.GetComponent());
             webView.Browser.LoadURL("http://web.csulb.edu/~phuynh/cecs491b/index.html");
-        }
-
-        private void Intro_Click(object sender, RoutedEventArgs e)
-        {
-            while (this.NavigationService.CanGoBack)
-            {
-                this.NavigationService.GoBack();
-            }
         }
     }
 }

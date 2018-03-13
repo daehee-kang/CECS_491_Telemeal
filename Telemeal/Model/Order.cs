@@ -13,18 +13,11 @@ namespace Telemeal.Model
         public double SalesTax { get; set; }
         public DateTime OrderDateTime { get; set; }
         public bool IsTakeOut { get; set; }
-        public PaymentMethod Pmethod { get; set; }
         public List<Food> Foods { get; set; }
 
         public double SubTotal()
         {
             return Total + Total * SalesTax;
         }
-    }
-
-    public enum PaymentMethod
-    {
-        Cash,
-        Paypal
     }
 }
