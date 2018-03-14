@@ -9,9 +9,11 @@
       Title="ManagerOptions_Page">
 
     <Viewbox>
-        <UniformGrid Rows="1" Columns="2">
-            <Button Grid.Column="0" Name="EditEmployee" Margin="10" Height="100" VerticalAlignment="Top" Click="Edit_Employee_Click" Content="Edit Employee"/>
-            <Button Grid.Column="1" Name="EditMenu" Margin="10" Height="100" VerticalAlignment="Top" Click="Edit_Menu_Click" Content="Edit Menu"/>
+        <UniformGrid Rows="2" Columns="2">
+            <Button Grid.Column="0" Name="EditEmployee" Margin="10" Height="70" VerticalAlignment="Top" Click="Edit_Employee_Click" Content="Edit Employee"/>
+            <Button Grid.Column="1" Name="EditMenu" Margin="10" Height="70" VerticalAlignment="Top" Click="Edit_Menu_Click" Content="Edit Menu"/>
+            <Button Grid.Row="1" Grid.Column="0" Name="bInvoice" Margin="10" Height="70" VerticalAlignment="Top" Click="Invoice_Click" Content="Invoice"/>
+            <Button Grid.Row="1" Grid.Column="1" Name="bBack" Margin="10" Height="70" VerticalAlignment="Top" Click="Back_Click" Content="Back"/>
         </UniformGrid>
     </Viewbox>
 </Page>
