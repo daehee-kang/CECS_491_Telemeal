@@ -86,7 +86,7 @@ namespace Server
                     items.Add(item);
                 }*/
                 bool received = GetOrder();
-                if (received)
+                if(received)
                 {
                     Order order = ReadFile();
                     foreach (Food f in order.Foods)
@@ -101,6 +101,8 @@ namespace Server
                 {
                     itemCart.Items.Refresh();
                 });
+
+                
             }
         }
 
@@ -146,7 +148,7 @@ namespace Server
                     {
                         file.Write(fileData, 0, fileData.Length);
                         file.Close();
-                    }
+                    } 
                 }
 
                 FtpWebRequest delReq = (FtpWebRequest)WebRequest.Create("ftp://18.216.172.183/Order/order.txt");
@@ -213,7 +215,7 @@ namespace Server
         private static Order ReadFile()
         {
             String jsonText = File.ReadAllText(OrderPath(Environment.CurrentDirectory));
-            var charsToRemove = new string[] { "\\" };
+            var charsToRemove = new string[] {"\\"};
             foreach (var c in charsToRemove)
             {
                 jsonText = jsonText.Replace(c, string.Empty);
