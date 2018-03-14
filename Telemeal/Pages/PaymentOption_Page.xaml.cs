@@ -12,9 +12,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PayPal;
 using Telemeal.Model;
 using Newtonsoft.Json;
 using System.Net.Sockets;
+using System.IO;
+using System.Net;
+using System.Data;
 
 namespace Telemeal.Pages
 {
@@ -23,83 +27,62 @@ namespace Telemeal.Pages
     /// </summary>
     public partial class PaymentOption_Page : Page
     {
-        //order information is passed from the OrderPage
-        Order order;
-
-        /// <summary>
-        /// Constructor for PaymentOption_Page
-        /// This constructor will initialize the component in the view, and show cart and price information on the screen
-        /// </summary>
-        /// <param name="o">Order object passed for visualization of cart items and price information</param>
+        Order mOrder;
         public PaymentOption_Page(Order o)
         {
             InitializeComponent();
-            order = o;
-            //Convert order into user friendly cart item object
-            List<CartItem> items = new List<CartItem>();
-            //iterate through the food items in the order
-            foreach (Food f in order.Foods)
+            mOrder = o;
+            List<CartItems> items = new List<CartItems>();
+            foreach (Food f in o.Foods)
             {
-                //convert into cartItems object
-                CartItem i = new CartItem { Qty = 1, Name = f.Name, Price = f.Price };
-                //if cart item already exist in the cart, increase quantity
+                CartItems i = new CartItems { Qty = 1, Name = f.Name, Price = f.Price };
                 if (items.Select(x => x.Name).Contains(i.Name))
                 {
                     items.Where(x => x.Name == f.Name).First().Qty++;
                 }
-                //otherwise add new item
                 else
                     items.Add(i);
             }
-            //bind item to the cart
             itemCart.ItemsSource = items;
-            //bind subtotal to the AmountDue
-            AmountDue.Text = order.SubTotal().ToString("F2");
-            //MessageBox.Show(ConvertJSON());
+            AmountDue.Text = o.SubTotal().ToString("F2");
+            MessageBox.Show(ConvertJSON());
         }
 
-        /// <summary>
-        /// Convert order object into JSON object to communicate with the printing method or payment method
-        /// </summary>
-        /// <returns></returns>
         private string ConvertJSON()
         {
-            return JsonConvert.SerializeObject(order);
+            return JsonConvert.SerializeObject(mOrder);
         }
 
-        /// <summary>
-        /// Button click event for "Menu" button
-        /// This method will go back to previous screen with all the information saved
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void Menu_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show(OrderPath(Environment.CurrentDirectory));
             this.NavigationService.GoBack();
         }
 
-        /// <summary>
-        /// Button click event for "Cash" button
-        /// This method will lead to CashPmt_Page
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void Cash_Click(object sender, RoutedEventArgs e)
         {
-            byte[] bytes = sendMessage(System.Text.Encoding.Unicode.GetBytes(ConvertJSON()));
-            order.Pmethod = PaymentMethod.Cash;
+            //byte[] bytes = sendMessage(System.Text.Encoding.Unicode.GetBytes(ConvertJSON()));
+            //WebRequest request = WebRequest.Create("ftp://18.216.172.183");
+            //request.Method = WebRequestMethods.Ftp.ListDirectoryDetails;
+            //request.Credentials = new NetworkCredential("cecs327", "cecs327");
+
+            WriteFile(OrderPath(Environment.CurrentDirectory));
+            using (WebClient client = new WebClient())
+            {
+                client.Credentials = new NetworkCredential("cecs327", "cecs327");
+                client.UploadFile("ftp://18.216.172.183/Order/order.txt", "STOR",OrderPath(Environment.CurrentDirectory));
+   
+            }
+            /*using (var resp = (FtpWebResponse)request.GetResponse())
+            {
+                MessageBox.Show(resp.StatusCode.ToString());
+              
+            }*/
             this.NavigationService.Navigate(new CashPmt_Page());
         }
 
-        /// <summary>
-        /// Button click event for "Paypal" button
-        /// This method will lead to PaypalPmt_Page
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void Paypal_Click(object sender, RoutedEventArgs e)
         {
-            order.Pmethod = PaymentMethod.Paypal;
             this.NavigationService.Navigate(new PaypalPmt_Page());
         }
 
@@ -108,7 +91,7 @@ namespace Telemeal.Pages
             const int bytesize = 1024 * 1024;
             try // Try connecting and send the message bytes  
             {
-                TcpClient client = new TcpClient("127.0.0.1", 1234); // Create a new connection  
+                System.Net.Sockets.TcpClient client = new System.Net.Sockets.TcpClient("127.0.0.1", 1234); // Create a new connection  
                 NetworkStream stream = client.GetStream();
 
                 stream.Write(messageBytes, 0, messageBytes.Length); // Write the bytes  
@@ -124,6 +107,56 @@ namespace Telemeal.Pages
             }
 
             return messageBytes; // Return response  
+        }
+
+        private string OrderPath(string path)
+        {
+            string relPath = "";
+            int counter = 0;
+            bool pathFound = false;
+            String[] split = path.Split('\\');
+
+            for (int i = 0; i < split.Length; i++)
+            {
+                if (split[i] == "CECS_491_Telemeal")
+                {
+                    counter = i;
+                    pathFound = true;
+                    break;
+                }
+            }
+
+            if (pathFound)
+            {
+                for (int i = 0; i <= counter; i++)
+                {
+                    if(i!=0)
+                    {
+                        relPath += "/";
+                    }
+                    relPath += split[i];
+                    if (i == counter)
+                    {
+                        relPath += "/";
+                        relPath += "order.txt";
+                    }
+                }
+            }
+
+            return relPath;
+        }
+
+        private void WriteFile(string path)
+        {
+            StreamWriter output = new StreamWriter(path);
+
+            //Writes the beginning statement to the specified file in output
+            //deletes output object when done
+            using (output)
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(output, ConvertJSON());
+            }
         }
     }
 }
