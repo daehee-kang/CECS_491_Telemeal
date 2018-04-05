@@ -138,7 +138,7 @@ namespace Server
 
                 using (WebClient req = new WebClient())
                 {
-                    req.Credentials = new NetworkCredential("cecs327", "cecs327");
+                    req.Credentials = new NetworkCredential("wut", "wut");
                     byte[] fileData = req.DownloadData("ftp://18.216.172.183/Order/order.txt");
                     MessageBox.Show(OrderPath(Environment.CurrentDirectory));
 
@@ -152,7 +152,7 @@ namespace Server
                 FtpWebRequest delReq = (FtpWebRequest)WebRequest.Create("ftp://18.216.172.183/Order/order.txt");
 
                 //If you need to use network credentials
-                delReq.Credentials = new NetworkCredential("cecs327", "cecs327");
+                delReq.Credentials = new NetworkCredential("wut", "wut");
                 //additionally, if you want to use the current user's network credentials, just use:
                 //System.Net.CredentialCache.DefaultNetworkCredentials
 
