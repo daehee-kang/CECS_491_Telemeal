@@ -77,7 +77,7 @@ namespace Telemeal.Pages
             WriteFile(OrderPath(Environment.CurrentDirectory));
             using (WebClient client = new WebClient())
             {
-                client.Credentials = new NetworkCredential("cecs327", "cecs327");
+                client.Credentials = new NetworkCredential("wut", "wut");
                 client.UploadFile("ftp://18.216.172.183/Order/order.txt", "STOR", OrderPath(Environment.CurrentDirectory));
 
             }
